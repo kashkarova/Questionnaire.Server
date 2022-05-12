@@ -1,19 +1,23 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Questionnaire.Data.Entities
 {
-    public class Question
+    public class Question : IEntity
     {
-        public Guid Id { get; set; }
+        public ObjectId Id { get; set; }
 
         public string Text { get; set; }
 
         public QuestionType Type { get; set; }
 
-        public string Answer { get; set; }
+        public IEnumerable<Answer> Answers { get; set; }  
+    }
+
+    public enum QuestionType
+    {
+        Poll = 1,
+        Trivia = 2
     }
 }

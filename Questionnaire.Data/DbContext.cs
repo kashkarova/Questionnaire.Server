@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
 
 namespace Questionnaire.Data
 {
     public class DbContext
     {
+        public DbContext(IConfiguration configuration)
+        {
+            var url = configuration.GetConnectionString("MongoDB");
+
+            var mongoUrl = new MongoUrl(url);
+            IMongoClient client = new MongoClient(mongoUrl);
+            MongoDatabase = client.GetDatabase(mongoUrl.DatabaseName);
+        }
+
+        public IMongoDatabase MongoDatabase { get; }
     }
 }
