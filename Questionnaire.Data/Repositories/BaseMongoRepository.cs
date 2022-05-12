@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Questionnaire.Data.Repositories
 {
-    public abstract class BaseMongoRepository<TEntity> : IMongoRepository<TEntity, ObjectId> where TEntity : IEntity
+    public abstract class BaseMongoRepository<TEntity> : IMongoRepository<TEntity>
+        where TEntity : IEntity
     {
         protected abstract IMongoCollection<TEntity> Collection { get; }
 

@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Questionnaire.BLL.Models
+﻿namespace Questionnaire.BLL.Models
 {
     public class AnswerDisplayModel
     {
-        [Required]
+        public string Id { get; set; }
+
         public string Text { get; set; }
 
         public bool? IsCorrect { get; set; }

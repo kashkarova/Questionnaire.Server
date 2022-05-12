@@ -26,7 +26,6 @@ namespace Questionnaire.Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -34,7 +33,7 @@ namespace Questionnaire.Server
             });
 
             services.AddScoped<DbContext>();
-            services.AddScoped<IMongoRepository<Question, ObjectId>, QuestionRepository>();
+            services.AddScoped<IMongoRepository<Question>, QuestionRepository>();
             services.AddScoped<IQuestionService, QuestionService>();
 
             var mapperConfig = new MapperConfiguration(mc =>
@@ -59,8 +58,6 @@ namespace Questionnaire.Server
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

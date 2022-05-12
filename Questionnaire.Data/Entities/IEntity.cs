@@ -2,12 +2,8 @@
 
 namespace Questionnaire.Data.Entities
 {
-    public interface IEntity<TKey>
+    public interface IEntity
     {
-        TKey Id { get; set; }
-    }
-
-    public interface IEntity : IEntity<ObjectId>
-    {
+        ObjectId Id { get; set; }
     }
 }

@@ -11,10 +11,5 @@ namespace Questionnaire.Data.Entities
         public bool? IsCorrect { get; set; }
 
         public int Vote { get; set; }
-
-        public Answer()
-        {
-            Id = ObjectId.GenerateNewId();
-        }
     }
 }

@@ -5,8 +5,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Questionnaire.BLL.Models
 {
-    public class QuestionModel
-    {
+    public class QuestionCreateModel
+    { 
         [Required]
         public string Text { get; set; }
 
@@ -14,6 +14,6 @@ namespace Questionnaire.BLL.Models
         public QuestionType Type { get; set; }
 
         [Required]
-        public IEnumerable<AnswerModel> Answers { get; set; }
+        public IEnumerable<AnswerCreateModel> Answers { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using Questionnaire.Data.Entities;
 using Questionnaire.Data.Repositories;
 using System;
@@ -11,9 +10,9 @@ namespace Questionnaire.BLL.Services
 {
     public class QuestionService : IQuestionService
     {
-        private readonly IMongoRepository<Question, ObjectId> _questionRepository;
+        private readonly IMongoRepository<Question> _questionRepository;
 
-        public QuestionService(IMongoRepository<Question, ObjectId> questionRepository)
+        public QuestionService(IMongoRepository<Question> questionRepository)
         {
             _questionRepository = questionRepository;
         }
@@ -28,6 +27,11 @@ namespace Questionnaire.BLL.Services
             if (question.Type == QuestionType.Poll && question.Answers.Any(a => a.IsCorrect == true))
             {
                 throw new ArgumentException("Poll questions shouldn`t have correct answers!");
+            }
+
+            foreach (var answer in question.Answers)
+            {
+                answer.Id = ObjectId.GenerateNewId();
             }
 
             var addedQuestion = await _questionRepository.SaveAsync(question);

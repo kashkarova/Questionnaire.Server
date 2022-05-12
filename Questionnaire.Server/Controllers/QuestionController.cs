@@ -23,35 +23,35 @@ namespace Questionnaire.Server.Controllers
             _mapper = mapper;
         }
 
-        [Route("")]
-        [HttpPost]
-        public async Task<IActionResult> Insert([FromBody]QuestionModel question)
+        [HttpPost("")]
+        [ProducesResponseType(typeof(QuestionDisplayModel), 200)]
+        public async Task<IActionResult> Insert([FromBody] QuestionCreateModel question)
         {
             try
             {
                 var mappedQuestion = _mapper.Map<Question>(question);
                 var createdQuestion = await _questionService.AddQuestionWithAnswers(mappedQuestion);
 
-                var mappedQuestionResult = _mapper.Map<QuestionModel>(createdQuestion);
+                var mappedQuestionResult = _mapper.Map<QuestionDisplayModel>(createdQuestion);
 
                 return Ok(mappedQuestionResult);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
         }
 
-        [Route("/{questionId}")]
-        [HttpGet]
-        public async Task<IActionResult> Get([FromRoute]string questionId)
+        [HttpGet("/{questionId}")]
+        [ProducesResponseType(typeof(QuestionDisplayModel), 200)]
+        public async Task<IActionResult> Get([FromRoute] string questionId)
         {
             try
             {
                 var id = ObjectId.Parse(questionId);
 
                 var question = await _questionService.GetQuestion(id);
-                var mappedQuestion = _mapper.Map<QuestionModel>(question);
+                var mappedQuestion = _mapper.Map<QuestionDisplayModel>(question);
 
                 return Ok(mappedQuestion);
             }
@@ -60,10 +60,10 @@ namespace Questionnaire.Server.Controllers
                 return BadRequest(e.Message);
             }
         }
-        
-        [Route("/{questionId}/vote")]
-        [HttpPut]
-        public async Task<IActionResult> Vote([FromRoute]string questionId, [FromBody] string votedAnswerId)
+
+        [HttpPut("/{questionId}/vote/{votedAnswerId}")]
+        [ProducesResponseType(typeof(List<AnswerDisplayModel>), 200)]
+        public async Task<IActionResult> Vote([FromRoute] string questionId, [FromRoute] string votedAnswerId)
         {
             try
             {

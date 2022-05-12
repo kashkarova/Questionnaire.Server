@@ -2,7 +2,7 @@
 
 namespace Questionnaire.Server.Models
 {
-    public class AnswerModel
+    public class AnswerCreateModel
     {
         [Required]
         public string Text { get; set; }

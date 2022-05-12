@@ -10,7 +10,7 @@ namespace Questionnaire.Data
             var url = configuration.GetConnectionString("MongoDB");
 
             var mongoUrl = new MongoUrl(url);
-            IMongoClient client = new MongoClient(mongoUrl);
+            var client = new MongoClient(mongoUrl);
             MongoDatabase = client.GetDatabase(mongoUrl.DatabaseName);
         }
 

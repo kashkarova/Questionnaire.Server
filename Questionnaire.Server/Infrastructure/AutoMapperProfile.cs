@@ -9,17 +9,15 @@ namespace Questionnaire.BLL.Infrastructure
     {
         public AutoMapperProfile()
         {
-            CreateMap<QuestionModel, Question>()
-                .ForMember(x => x.Id, opt => opt.Ignore())
-                .ReverseMap();
+            CreateMap<Question, QuestionDisplayModel>();
 
-            CreateMap<AnswerModel, Answer>()
-                .ForMember(x => x.Id, opt => opt.Ignore())
-                .ReverseMap();
+            CreateMap<Answer, AnswerDisplayModel>();
 
-            CreateMap<AnswerDisplayModel, Answer>()
-                .ForMember(x => x.Id, opt => opt.Ignore())
-                .ReverseMap();
+            CreateMap<QuestionCreateModel, Question>()
+                .ForMember(x => x.Id, opt => opt.Ignore());
+
+            CreateMap<AnswerCreateModel, Answer>()
+                .ForMember(x => x.Id, opt => opt.Ignore());        
         }
     }
 }
