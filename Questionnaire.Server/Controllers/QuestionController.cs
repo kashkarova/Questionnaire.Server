@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Questionnaire.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("questions")]
     [ApiController]
     public class QuestionController : ControllerBase
     {
@@ -23,14 +23,23 @@ namespace Questionnaire.Server.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("")]
+        [ProducesResponseType(typeof(List<QuestionDisplayModel>), 200)]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var questions = await _questionService.GetQuestionsAsync();
+            var mappedQuestionsResult = _mapper.Map<List<QuestionDisplayModel>>(questions);
+            return Ok(mappedQuestionsResult);
+        }
+
         [HttpPost("")]
         [ProducesResponseType(typeof(QuestionDisplayModel), 200)]
-        public async Task<IActionResult> Insert([FromBody] QuestionCreateModel question)
+        public async Task<IActionResult> InsertAsync([FromBody] QuestionCreateModel question)
         {
             try
             {
                 var mappedQuestion = _mapper.Map<Question>(question);
-                var createdQuestion = await _questionService.AddQuestionWithAnswers(mappedQuestion);
+                var createdQuestion = await _questionService.AddQuestionWithAnswersAsync(mappedQuestion);
 
                 var mappedQuestionResult = _mapper.Map<QuestionDisplayModel>(createdQuestion);
 
@@ -42,15 +51,15 @@ namespace Questionnaire.Server.Controllers
             }
         }
 
-        [HttpGet("/{questionId}")]
+        [HttpGet("{questionId}")]
         [ProducesResponseType(typeof(QuestionDisplayModel), 200)]
-        public async Task<IActionResult> Get([FromRoute] string questionId)
+        public async Task<IActionResult> GetAsync([FromRoute] string questionId)
         {
             try
             {
                 var id = ObjectId.Parse(questionId);
 
-                var question = await _questionService.GetQuestion(id);
+                var question = await _questionService.GetQuestionAsync(id);
                 var mappedQuestion = _mapper.Map<QuestionDisplayModel>(question);
 
                 return Ok(mappedQuestion);
@@ -61,16 +70,16 @@ namespace Questionnaire.Server.Controllers
             }
         }
 
-        [HttpPut("/{questionId}/vote/{votedAnswerId}")]
+        [HttpPut("{questionId}/vote/{votedAnswerId}")]
         [ProducesResponseType(typeof(List<AnswerDisplayModel>), 200)]
-        public async Task<IActionResult> Vote([FromRoute] string questionId, [FromRoute] string votedAnswerId)
+        public async Task<IActionResult> VoteAsync([FromRoute] string questionId, [FromRoute] string votedAnswerId)
         {
             try
             {
                 var parsedQuestionId = ObjectId.Parse(questionId);
                 var parsedVotedAnswerId = ObjectId.Parse(votedAnswerId);
 
-                var result = await _questionService.VoteForQuestion(parsedQuestionId, parsedVotedAnswerId);
+                var result = await _questionService.VoteForQuestionAsync(parsedQuestionId, parsedVotedAnswerId);
 
                 var mappedResult = _mapper.Map<List<AnswerDisplayModel>>(result);
 

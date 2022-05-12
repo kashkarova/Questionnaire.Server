@@ -7,10 +7,12 @@ namespace Questionnaire.BLL.Services
 {
     public interface IQuestionService
     {
-        Task<Question> AddQuestionWithAnswers(Question question);
+        Task<Question> AddQuestionWithAnswersAsync(Question question);
 
-        Task<Question> GetQuestion(ObjectId id);
+        Task<Question> GetQuestionAsync(ObjectId id);
 
-        Task<List<Answer>> VoteForQuestion(ObjectId questionId, ObjectId answerId);
+        Task<List<Answer>> VoteForQuestionAsync(ObjectId questionId, ObjectId answerId);
+
+        Task<List<Question>> GetQuestionsAsync();
     }
 }

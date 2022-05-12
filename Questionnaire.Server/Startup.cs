@@ -10,7 +10,6 @@ using Questionnaire.BLL.Infrastructure;
 using Questionnaire.BLL.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using MongoDB.Bson;
 
 namespace Questionnaire.Server
 {
@@ -29,7 +28,7 @@ namespace Questionnaire.Server
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication2", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Questionnaire.Server", Version = "v1" });
             });
 
             services.AddScoped<DbContext>();

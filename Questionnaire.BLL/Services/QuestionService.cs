@@ -17,7 +17,7 @@ namespace Questionnaire.BLL.Services
             _questionRepository = questionRepository;
         }
 
-        public async Task<Question> AddQuestionWithAnswers(Question question)
+        public async Task<Question> AddQuestionWithAnswersAsync(Question question)
         {
             if (question.Type == QuestionType.Trivia && !question.Answers.Any(a => a.IsCorrect == true))
             {
@@ -39,12 +39,18 @@ namespace Questionnaire.BLL.Services
             return addedQuestion;
         }
 
-        public async Task<Question> GetQuestion(ObjectId id)
+        public async Task<Question> GetQuestionAsync(ObjectId id)
         {
             return await _questionRepository.GetByIdAsync(id);
         }
 
-        public async Task<List<Answer>> VoteForQuestion(ObjectId questionId, ObjectId answerId)
+        public async Task<List<Question>> GetQuestionsAsync()
+        {
+            var questions = await _questionRepository.FindAllAsync(_ => true);
+            return questions.ToList();
+        }
+
+        public async Task<List<Answer>> VoteForQuestionAsync(ObjectId questionId, ObjectId answerId)
         {
             var question = await _questionRepository.GetByIdAsync(questionId);
 
